@@ -23,11 +23,10 @@ void	free(void* ptr){
 	t_block*	block = getBlockFromPtr(ptr);
 
 	// Decide which zone the block belongs to and free it accordingly
-	if (block->size <= 128){
+	if (block->size <= 128)
 		freeBlock(&g_zone.tiny, ptr);
-	} else if (block->size <= 1024){
+	else if (block->size <= 1024)
 		freeBlock(&g_zone.small, ptr);
-	} else {
-		munmap(block, block->size + sizeof(t_block));// For large allocations, unmap the memory directly
-	}
+	else
+		munmap(block, block->size + sizeof(t_block));
 }

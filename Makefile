@@ -27,9 +27,9 @@ re:fclean
 	$(MAKE) all
 
 run:re
+	$(CC) $(FLAGS) -L. -lft_malloc src/main.c
 	clear
-	gcc -Wall -Wextra -Werror src/main.c -L. -lft_malloc -o main.out
-	LD_PRELOAD=./libft_malloc.so ./main.out
+	LD_PRELOAD=./$(NAME) ./a.out
 
 $(OBJ_PATH)%.o:$(SRC_PATH)%.c | $(OBJ_DIRS)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@
