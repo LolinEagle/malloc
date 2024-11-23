@@ -20,6 +20,7 @@ int	main(void){
 	// printf("%s\n", bjr);
 
 	// Free
-	// free(bjr);
+	free(bjr);
+	printf("End of main()\n");
 	return (0);
 }

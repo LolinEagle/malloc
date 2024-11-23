@@ -16,7 +16,6 @@
 
 typedef struct s_block{
 	size_t			size;
-	int				free;
 	struct s_block*	next;
 }	t_block;
 
@@ -26,7 +25,7 @@ typedef struct s_zone{
 	t_block*	large;
 }	t_zone;
 
-t_block*	getBlockFromPtr(void *ptr);
+t_block*	getBlockFromPtr(void* ptr);
 
 void	free(void* ptr);
 void*	malloc(size_t size);
