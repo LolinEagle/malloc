@@ -6,11 +6,9 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-#define FALSE 0
-#define TRUE 1
-#define TINY 131072// 128KB
-#define SMALL 1048576// 1MB
-#define PAGE_SIZE sysconf(_SC_PAGESIZE)
+#define PAGESIZE sysconf(_SC_PAGESIZE)
+#define TINY (PAGESIZE * 32)
+#define SMALL (PAGESIZE * 256)
 #define PROT PROT_READ | PROT_WRITE
 #define FLAGS MAP_ANONYMOUS | MAP_PRIVATE
 
@@ -26,7 +24,6 @@ typedef struct s_zone{
 }	t_zone;
 
 t_block*	getBlockFromPtr(void* ptr);
-
-void	free(void* ptr);
-void*	malloc(size_t size);
-void*	realloc(void* ptr, size_t size);
+void		free(void* ptr);
+void*		malloc(size_t size);
+void*		realloc(void* ptr, size_t size);

@@ -28,6 +28,7 @@ void	freeBlock(t_block** head, void *ptr){
 }
 
 void	free(void* ptr){
+	write(1, "ft_free is called\n", 18);
 	if (!ptr)
 		return ;
 

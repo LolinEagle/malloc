@@ -17,11 +17,12 @@ void*	findFreeBlock(t_block** head, size_t size){
 }
 
 void*	malloc(size_t size){
-	write(1, "ft_malloc is called\n", 21);
+	write(1, "ft_malloc is called\n", 20);
+	if (size == 0)
+		return (NULL);
 	if (size <= 128)
 		return (findFreeBlock(&g_zone.tiny, size));
-	else if (size <= 1024)
+	if (size <= 1024)
 		return (findFreeBlock(&g_zone.small, size));
-	else
-		return (findFreeBlock(&g_zone.large, size));
+	return (findFreeBlock(&g_zone.large, size));
 }
