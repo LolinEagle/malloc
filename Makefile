@@ -4,7 +4,7 @@ endif
 
 NAME		=	libft_malloc_$(HOSTTYPE).so
 HOSTLIB		=	libft_malloc.so
-SRC			=	free.c malloc.c realloc.c
+SRC			=	free.c malloc.c realloc.c showAllocMem.c
 CC			=	gcc
 RM			=	rm -rf
 LN			=	ln -sf
@@ -27,7 +27,7 @@ re:fclean
 	$(MAKE) all
 
 run:re
-	$(CC) $(FLAGS) -L. -lft_malloc src/main.c
+	$(CC) $(FLAGS) -L. -lft_malloc_$(HOSTTYPE) src/main.c
 	clear
 	LD_PRELOAD=./$(NAME) ./a.out
 
