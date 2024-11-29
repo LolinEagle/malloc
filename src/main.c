@@ -4,23 +4,24 @@ int	main(void){
 	// Malloc
 	char*	bjr = malloc(sizeof(char) * 8);
 	if (!bjr){
-		printf("malloc()\n");
+		fprintf(stderr, "malloc()\n");
 		return (0);
 	}
 	bjr = "Bonjour";
-	printf("%s\n", bjr);
+	fprintf(stderr, "%s\n", bjr);
 
 	// Realloc
 	// bjr = realloc(bjr, sizeof(char) * 22);
 	// if (!bjr){
-	// 	printf("realloc()\n");
+	// 	fprintf(stderr, "realloc()\n");
 	// 	return (0);
 	// }
 	// bjr = "Bonjour tous le monde";
-	// printf("%s\n", bjr);
+	// fprintf(stderr, "%s\n", bjr);
 
 	// Free
+	showAllocMem();
 	free(bjr);
-	printf("End of main()\n");
+	showAllocMem();
 	return (0);
 }

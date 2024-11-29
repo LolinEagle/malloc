@@ -5,10 +5,11 @@ endif
 NAME		=	libft_malloc_$(HOSTTYPE).so
 HOSTLIB		=	libft_malloc.so
 SRC			=	free.c malloc.c realloc.c showAllocMem.c
-CC			=	gcc
+CC			=	cc
 RM			=	rm -rf
 LN			=	ln -sf
 FLAGS		=	-Wall -Werror -Wextra -fPIC -g3
+LIB			=	-L. -lft_malloc_$(HOSTTYPE)
 INC			=	-Iinc
 SRC_PATH	=	./src/
 OBJ_PATH	=	./obj/
@@ -26,10 +27,13 @@ fclean:clean
 re:fclean
 	$(MAKE) all
 
-run:re
-	$(CC) $(FLAGS) -L. -lft_malloc_$(HOSTTYPE) src/main.c
+run:all
+	$(CC) $(FLAGS) $(LIB) src/main.c
 	clear
-	LD_PRELOAD=./$(NAME) ./a.out
+	LD_LIBRARY_PATH=. LD_PRELOAD=./$(NAME) ./a.out
+
+test:fclean
+	$(MAKE) run
 
 $(OBJ_PATH)%.o:$(SRC_PATH)%.c | $(OBJ_DIRS)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@
@@ -38,7 +42,7 @@ $(OBJ_DIRS):
 	mkdir -p $(OBJ_DIRS)
 
 $(NAME):$(OBJ)
-	$(CC) $(FLAGS) -shared $(OBJ) -o $(NAME)
+	$(CC) $(FLAGS) -shared $(LIB) $(INC) $(OBJ) -o $(NAME)
 	$(LN) $(NAME) $(HOSTLIB)
 
-.PHONY:all clean fclean re run
+.PHONY:all clean fclean re run test

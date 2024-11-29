@@ -3,7 +3,6 @@
 extern t_zone	g_zone;
 
 void*	realloc(void* ptr, size_t size){
-	write(1, "ft_realloc is called\n", 21);
 	if (ptr == NULL)
 		return (malloc(size));
 	if (size == 0){

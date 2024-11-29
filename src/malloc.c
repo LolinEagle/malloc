@@ -7,17 +7,18 @@ void*	findFreeBlock(t_block** head, size_t size){
 	if (size <= 128) zoneSize = TINY;
 	else if (size <= 1024) zoneSize = SMALL;
 	else zoneSize = size + sizeof(t_block);
+
 	t_block*	newBlock = (t_block*)mmap(NULL, zoneSize, PROT, FLAGS, -1, 0);
 	if (newBlock == MAP_FAILED)
 		return (NULL);
 	newBlock->size = zoneSize - sizeof(t_block);
 	newBlock->next = *head;
+
 	*head = newBlock;
 	return ((void*)(newBlock + 1));// Return the address after block metadata
 }
 
 void*	malloc(size_t size){
-	write(1, "ft_malloc is called\n", 20);
 	if (size == 0)
 		return (NULL);
 	if (size <= 128)

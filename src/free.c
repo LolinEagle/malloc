@@ -13,10 +13,13 @@ void	freeBlock(t_block** head, void *ptr){
 	if (!block)
 		return ;
 
+	// Remove block from head
 	t_block*	current = *head;
 	while (current){
-		if (current->next == block)
+		if (current->next == block){
 			current->next = block->next;
+			break ;
+		}
 		current = current->next;
 	}
 	
@@ -24,11 +27,12 @@ void	freeBlock(t_block** head, void *ptr){
 	if (block->size <= 128) zoneSize = TINY;
 	else if (block->size <= 1024) zoneSize = SMALL;
 	else zoneSize = block->size + sizeof(t_block);
-	munmap(block, zoneSize);
+
+	if (munmap(block, zoneSize) < 0)
+		fprintf(stderr, "munmap() error : errno=%i\n", errno);
 }
 
 void	free(void* ptr){
-	write(1, "ft_free is called\n", 18);
 	if (!ptr)
 		return ;
 
