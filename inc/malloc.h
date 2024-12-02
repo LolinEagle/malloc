@@ -7,7 +7,7 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
-#define PAGESIZE sysconf(_SC_PAGESIZE)
+#define PAGESIZE (size_t)sysconf(_SC_PAGESIZE)
 #define TINY (PAGESIZE * 32)
 #define SMALL (PAGESIZE * 256)
 #define PROT PROT_READ | PROT_WRITE

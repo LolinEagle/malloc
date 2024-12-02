@@ -2,26 +2,24 @@
 
 int	main(void){
 	// Malloc
-	char*	bjr = malloc(sizeof(char) * 8);
-	if (!bjr){
-		fprintf(stderr, "malloc()\n");
-		return (0);
-	}
-	bjr = "Bonjour";
-	fprintf(stderr, "%s\n", bjr);
+	char*	one = malloc(1);
+	if (!one)
+		return (1);
+	char*	two = malloc(TINY);
+	if (!two)
+		return (1);
+	char*	tri = malloc(SMALL);
+	if (!tri)
+		return (1);
 
 	// Realloc
-	// bjr = realloc(bjr, sizeof(char) * 22);
-	// if (!bjr){
-	// 	fprintf(stderr, "realloc()\n");
-	// 	return (0);
-	// }
-	// bjr = "Bonjour tous le monde";
-	// fprintf(stderr, "%s\n", bjr);
 
 	// Free
 	showAllocMem();
-	free(bjr);
+	free(one);
+	showAllocMem();
+	free(two);
+	free(tri);
 	showAllocMem();
 	return (0);
 }

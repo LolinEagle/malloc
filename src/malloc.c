@@ -4,8 +4,8 @@ t_zone	g_zone = {NULL, NULL, NULL};// Global zone to manage allocations
 
 void*	findFreeBlock(t_block** head, size_t size){
 	size_t		zoneSize;
-	if (size <= 128) zoneSize = TINY;
-	else if (size <= 1024) zoneSize = SMALL;
+	if (size <= TINY) zoneSize = TINY;
+	else if (size <= SMALL) zoneSize = SMALL;
 	else zoneSize = size + sizeof(t_block);
 
 	t_block*	newBlock = (t_block*)mmap(NULL, zoneSize, PROT, FLAGS, -1, 0);
@@ -21,9 +21,10 @@ void*	findFreeBlock(t_block** head, size_t size){
 void*	malloc(size_t size){
 	if (size == 0)
 		return (NULL);
-	if (size <= 128)
+	else if (size <= TINY)
 		return (findFreeBlock(&g_zone.tiny, size));
-	if (size <= 1024)
+	else if (size <= SMALL)
 		return (findFreeBlock(&g_zone.small, size));
-	return (findFreeBlock(&g_zone.large, size));
+	else
+		return (findFreeBlock(&g_zone.large, size));
 }

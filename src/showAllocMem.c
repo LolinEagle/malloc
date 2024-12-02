@@ -23,5 +23,5 @@ void		showAllocMem(void){
 		total += b->size;
 	}
 
-	fprintf(stderr, "Total : %zu bytes allocated\n", total);
+	fprintf(stderr, "Total : %zu bytes allocated\n\n", total);
 }
