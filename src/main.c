@@ -1,25 +1,24 @@
 #include "../inc/malloc.h"
 
 int	main(void){
+	int		i;
+	void*	ret[8];
+	size_t	size[] = {1, 2, 3, 4, TINY, TINY + 1, SMALL, SMALL + 1};
+
 	// Malloc
-	char*	one = malloc(1);
-	if (!one)
-		return (1);
-	char*	two = malloc(TINY);
-	if (!two)
-		return (1);
-	char*	tri = malloc(SMALL);
-	if (!tri)
-		return (1);
+	for (i = 0; i < 8; i++)
+		ret[i] = malloc(size[i]);
+	showAllocMem();
 
 	// Realloc
+	for (i = 0; i < 5; i++)
+		ret[i] = realloc(ret[i], size[i] + TINY);
+	showAllocMem();
 
 	// Free
+	for (i = 0; i < 8; i++)
+		free(ret[i]);
 	showAllocMem();
-	free(one);
-	showAllocMem();
-	free(two);
-	free(tri);
-	showAllocMem();
+
 	return (0);
 }

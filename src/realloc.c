@@ -3,7 +3,7 @@
 extern t_zone	g_zone;
 
 void*	realloc(void* ptr, size_t size){
-	if (ptr == NULL)
+	if (!ptr)
 		return (malloc(size));
 	if (size == 0){
 		free(ptr);
@@ -14,11 +14,13 @@ void*	realloc(void* ptr, size_t size){
 	t_block*	oldBlock = getBlockFromPtr(ptr);
 	if (!oldBlock)
 		return (NULL);// Invalid pointer
-	if (size <= oldBlock->size)
+	if (size <= oldBlock->size){
+		oldBlock->freeSize = oldBlock->size - size;
 		return (ptr);
+	}
 
 	// Allocate a new block with the requested size
-	void *newPtr = malloc(size);
+	void*	newPtr = malloc(size);
 	if (!newPtr)
 		return (NULL);// Allocation failed
 
