@@ -2,12 +2,6 @@
 
 extern t_zone	g_zone;
 
-t_block*	getBlockFromPtr(void* ptr){
-	if (!ptr)
-		return (NULL);
-	return ((t_block*)ptr - 1);// Go back to the start of the block metadata
-}
-
 void	free(void* ptr){
 	// Get block to free
 	t_block*	block = getBlockFromPtr(ptr);

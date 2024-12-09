@@ -2,8 +2,6 @@
 
 #include <errno.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <sys/mman.h>
 #include <unistd.h>
 
@@ -25,8 +23,10 @@ typedef struct s_zone{
 	t_block*	large;
 }	t_zone;
 
+// Utils
+void*		memcpy(void* dest, const void* src, size_t n);
 t_block*	getBlockFromPtr(void* ptr);
-void		showAllocMem(void);
+void		show_alloc_mem(void);
 
 void		free(void* ptr);
 void*		malloc(size_t size);

@@ -1,10 +1,10 @@
 ifeq ($(HOSTTYPE),)
-	HOSTTYPE = $(shell uname -m)_$(shell uname -s)
+	HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
 
 NAME		=	libft_malloc_$(HOSTTYPE).so
 HOSTLIB		=	libft_malloc.so
-SRC			=	free.c malloc.c realloc.c showAllocMem.c
+SRC			=	free.c malloc.c realloc.c utils.c
 CC			=	cc
 RM			=	rm -rf
 LN			=	ln -sf
