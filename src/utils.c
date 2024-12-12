@@ -3,8 +3,8 @@
 extern t_zone	g_zone;
 
 void*		memcpy(void* dest, const void* src, size_t n){
-	char*		d = dest;
-	const char*	s = src;
+	char*		d = (char*)dest;
+	const char*	s = (char*)src;
 
 	while (n--)
 		*d++ = *s++;
