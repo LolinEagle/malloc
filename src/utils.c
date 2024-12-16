@@ -23,8 +23,9 @@ size_t		notFree(t_block* b){
 
 void		printAllocMem(t_block** head, size_t* total){
 	for (t_block* b = *head; b; b = b->next){
-		fprintf(stderr, "%p - %p : %zu bytes\n", b, b + b->size, notFree(b));
-		*total += b->size;
+		fprintf(stderr, "%p - %p : %li/%li bytes\n",
+			b, b + b->size, notFree(b), b->size);
+		*total += b->size + sizeof(t_block);
 	}
 }
 
