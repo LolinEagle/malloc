@@ -6,6 +6,8 @@
 #include <sys/mman.h>
 #include <unistd.h>
 
+#define FALSE 0
+#define TRUE 1
 #define PAGESIZE (size_t)sysconf(_SC_PAGESIZE)
 #define TINY PAGESIZE * 8
 #define SMALL PAGESIZE * 16
@@ -17,6 +19,8 @@
 typedef struct s_block{
 	size_t			size;
 	size_t			freeSize;
+	int				isFree;
+	__uint16_t		blockId;
 	struct s_block*	next;
 }	t_block;
 

@@ -13,14 +13,14 @@ int	main(void){
 	show_alloc_mem();
 
 	// Realloc
-	// for (i = 0; i < 5; i++)
-	// 	ret[i] = realloc(ret[i], size[i] + TINY);
-	// show_alloc_mem();
+	for (i = 0; i < 5; i++)
+		ret[i] = realloc(ret[i], size[i] + TINY);
+	show_alloc_mem();
 
 	// Free
-	// for (i = 0; i < 8; i++)
-	// 	free(ret[i]);
-	// show_alloc_mem();
+	for (i = 0; i < 8; i++)
+		free(ret[i]);
+	show_alloc_mem();
 
 	return (0);
 }
