@@ -1,7 +1,5 @@
 #include "../inc/malloc.h"
 
-extern t_zone	g_zone;
-
 void*		memcpy(void* dest, const void* src, size_t n){
 	char*		d = (char*)dest;
 	const char*	s = (char*)src;
@@ -11,10 +9,16 @@ void*		memcpy(void* dest, const void* src, size_t n){
 	return (dest);
 }
 
-t_block*	getBlockFromPtr(void* ptr){
+t_block*	getBlock(void* ptr){
 	if (!ptr)
 		return (NULL);
 	return ((t_block*)ptr - 1);// Go back to the start of the block metadata
+}
+
+void*		getPtr(t_block* block){
+	if (!block)
+		return (NULL);
+	return ((void*)block + sizeof(t_block));
 }
 
 size_t		notFree(t_block* b){
@@ -24,7 +28,7 @@ size_t		notFree(t_block* b){
 void		printAllocMem(t_block** head, size_t* total){
 	for (t_block* b = *head; b; b = b->next){
 		fprintf(stderr, "%p - %p : %li/%li bytes\n",
-			b, b + b->size, notFree(b), b->size);
+			getPtr(b), getPtr(b) + b->size, notFree(b), b->size);
 		*total += b->size + sizeof(t_block);
 	}
 }

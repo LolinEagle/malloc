@@ -1,7 +1,5 @@
 #include "../inc/malloc.h"
 
-extern t_zone	g_zone;
-
 void*	realloc(void* ptr, size_t size){
 	if (!ptr)
 		return (malloc(size));
@@ -11,7 +9,7 @@ void*	realloc(void* ptr, size_t size){
 	}
 
 	// Retrieve the block metadata associated with the given pointer
-	t_block*	oldBlock = getBlockFromPtr(ptr);
+	t_block*	oldBlock = getBlock(ptr);
 	if (!oldBlock)
 		return (NULL);// Invalid pointer
 	if (size <= oldBlock->size){

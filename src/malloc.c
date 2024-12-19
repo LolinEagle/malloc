@@ -1,6 +1,7 @@
 #include "../inc/malloc.h"
 
-t_zone	g_zone = {NULL, NULL, NULL};// Global zone to manage allocations
+t_zone			g_zone = {NULL, NULL, NULL};// Global zone to manage allocations
+pthread_mutex_t	g_lock;
 
 void*	reallocBlock(t_block** current, size_t size){
 	t_block*	new = *current;

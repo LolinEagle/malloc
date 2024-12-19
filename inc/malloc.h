@@ -30,9 +30,12 @@ typedef struct s_zone{
 	t_block*	large;
 }	t_zone;
 
+extern t_zone			g_zone;
+extern pthread_mutex_t	g_lock;
+
 // Utils
 void*		memcpy(void* dest, const void* src, size_t n);
-t_block*	getBlockFromPtr(void* ptr);
+t_block*	getBlock(void* ptr);
 size_t		notFree(t_block* b);
 void		show_alloc_mem(void);
 

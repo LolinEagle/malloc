@@ -1,10 +1,8 @@
 #include "../inc/malloc.h"
 
-extern t_zone	g_zone;
-
 void	free(void* ptr){
 	// Get block to free
-	t_block*	block = getBlockFromPtr(ptr);
+	t_block*	block = getBlock(ptr);
 	if (!block)
 		return ;
 
