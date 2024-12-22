@@ -1,10 +1,14 @@
 #include "../inc/malloc.h"
 
 void	free(void* ptr){
+	pthread_mutex_lock(&g_lock);
+
 	// Get block to free
 	t_block*	block = getBlock(ptr);
-	if (!block)
+	if (!block){
+		pthread_mutex_unlock(&g_lock);
 		return ;
+	}
 
 	// Change metadata
 	block->isFree = TRUE;
@@ -29,8 +33,10 @@ void	free(void* ptr){
 		parent = parent->next;
 	t_block*	lastChild = parent;
 	while (parent->blockId == block->blockId){
-		if (parent->isFree == FALSE)
+		if (parent->isFree == FALSE){
+			pthread_mutex_unlock(&g_lock);
 			return ;
+		}
 		if (!parent->next || parent->next->blockId != block->blockId)
 			break ;
 		parent = parent->next;
@@ -58,4 +64,5 @@ void	free(void* ptr){
 	// Free
 	if (munmap(parent, zoneSize) < 0)
 		fprintf(stderr, "munmap() error : errno=%i\n", errno);
+	pthread_mutex_unlock(&g_lock);
 }

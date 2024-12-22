@@ -16,6 +16,11 @@ OBJ_PATH	=	./obj/
 OBJ_DIRS	=	$(OBJ_PATH)
 OBJ			=	$(addprefix $(OBJ_PATH),$(SRC:.c=.o))
 
+# Debug
+TEST		=	test2
+TIME		=	/usr/bin/time -v
+GREP		=	2>&1 | grep -E "Minor|Major"
+
 all:$(NAME)
 
 clean:
@@ -28,9 +33,15 @@ re:fclean
 	$(MAKE) all
 
 run:re
-	$(CC) $(FLAGS) $(LIB) $(INC) $(OBJ) src/main.c
+	$(CC) $(FLAGS) $(LIB) $(INC) $(OBJ) test/main.c
 	clear
-	LD_LIBRARY_PATH=. LD_PRELOAD=./$(NAME) ./a.out
+	./run_linux.sh ./a.out
+
+test:re
+	$(CC) test/$(TEST).c
+	clear
+	$(TIME) ./a.out $(GREP)
+	./run_linux.sh $(TIME) ./a.out $(GREP)
 
 $(OBJ_PATH)%.o:$(SRC_PATH)%.c | $(OBJ_DIRS)
 	$(CC) $(FLAGS) $(INC) -c $< -o $@

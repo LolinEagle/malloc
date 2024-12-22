@@ -1,13 +1,14 @@
 #include "../inc/malloc.h"
 
 t_zone			g_zone = {NULL, NULL, NULL};// Global zone to manage allocations
-pthread_mutex_t	g_lock;
+pthread_mutex_t	g_lock = PTHREAD_MUTEX_INITIALIZER;
 
 void*	reallocBlock(t_block** current, size_t size){
 	t_block*	new = *current;
 
 	new->freeSize = new->size - size;
 	new->isFree = FALSE;
+	pthread_mutex_unlock(&g_lock);
 	return ((void*)(new + 1));
 }
 
@@ -25,6 +26,7 @@ void*	splitBlock(t_block** current, size_t size, t_block** head){
 	old->size = old->size - old->freeSize;
 	old->freeSize = 0;
 	*head = new;
+	pthread_mutex_unlock(&g_lock);
 	return ((void*)(new + 1));
 }
 
@@ -48,8 +50,10 @@ void*	findFreeBlock(t_block** head, size_t size){
 
 	// Call mmap to allocat memory
 	t_block*	new = (t_block*)mmap(NULL, zoneSize, PROT, FLAGS, -1, 0);
-	if (new == MAP_FAILED)
+	if (new == MAP_FAILED){
+		pthread_mutex_unlock(&g_lock);
 		return (NULL);
+	}
 	new->size = zoneSize - sizeof(t_block);
 	new->freeSize = new->size - size;
 	new->isFree = FALSE;
@@ -58,16 +62,19 @@ void*	findFreeBlock(t_block** head, size_t size){
 
 	// Make the new block the head of the linked list and return
 	*head = new;
+	pthread_mutex_unlock(&g_lock);
 	return ((void*)(new + 1));// Return the address after block metadata
 }
 
 void*	malloc(size_t size){
-	if (size <= 0)
+	pthread_mutex_lock(&g_lock);
+	if (size <= 0){
+		pthread_mutex_unlock(&g_lock);
 		return (NULL);
-	else if (size <= TINYBLOCK)
+	}
+	if (size <= TINYBLOCK)
 		return (findFreeBlock(&g_zone.tiny, size));
-	else if (size <= SMALLBLOCK)
+	if (size <= SMALLBLOCK)
 		return (findFreeBlock(&g_zone.small, size));
-	else
-		return (findFreeBlock(&g_zone.large, size));
+	return (findFreeBlock(&g_zone.large, size));
 }

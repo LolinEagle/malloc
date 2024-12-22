@@ -34,6 +34,7 @@ void		printAllocMem(t_block** head, size_t* total){
 }
 
 void		show_alloc_mem(void){
+	pthread_mutex_lock(&g_lock);
 	size_t	total = 0;
 
 	if (g_zone.tiny){
@@ -49,4 +50,5 @@ void		show_alloc_mem(void){
 		printAllocMem(&g_zone.large, &total);
 	}
 	fprintf(stderr, "Total : %zu bytes allocated\n\n", total);
+	pthread_mutex_unlock(&g_lock);
 }
