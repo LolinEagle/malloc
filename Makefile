@@ -35,7 +35,7 @@ re:fclean
 run:re
 	$(CC) $(FLAGS) $(LIB) $(INC) $(OBJ) test/main.c
 	clear
-	./run_linux.sh ./a.out
+	./run_linux.sh $(TIME) ./a.out
 
 test:re
 	$(CC) test/$(TEST).c

@@ -1,4 +1,4 @@
-# include "includes/malloc.h"
+# include "../inc/malloc.h"
 
 #define M (1024 * 1024)
 

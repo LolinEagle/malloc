@@ -25,6 +25,17 @@ size_t		notFree(t_block* b){
 	return (b->size - b->freeSize);
 }
 
+void		printBlock(t_block* b){
+	if (!b){
+		fprintf(stderr, "block is NULL\n");
+		return ;
+	}
+	fprintf(stderr,
+		"block=%p size=%li freeSize=%li isFree=%i blockId=%i next=%p\n",
+		b, b->size, b->freeSize, b->isFree, b->blockId, b->next
+	);
+}
+
 void		printAllocMem(t_block** head, size_t* total){
 	for (t_block* b = *head; b; b = b->next){
 		fprintf(stderr, "%p - %p : %li/%li bytes\n",

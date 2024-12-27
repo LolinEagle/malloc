@@ -14,7 +14,7 @@ void	free(void* ptr){
 	block->isFree = TRUE;
 
 	// Decide which zone the block belongs to
-	t_block*	head;
+	/*t_block*	head;
 	size_t		zoneSize;
 	if (block->size <= TINYBLOCK){
 		head = g_zone.tiny;
@@ -63,6 +63,6 @@ void	free(void* ptr){
 
 	// Free
 	if (munmap(parent, zoneSize) < 0)
-		fprintf(stderr, "munmap() error : errno=%i\n", errno);
+		fprintf(stderr, "munmap() error : errno=%i\n", errno);*/
 	pthread_mutex_unlock(&g_lock);
 }
