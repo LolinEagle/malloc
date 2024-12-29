@@ -14,7 +14,7 @@ void	free(void* ptr){
 	block->isFree = TRUE;
 
 	// Decide which zone the block belongs to
-	/*t_block*	head;
+	t_block*	head;
 	size_t		zoneSize;
 	if (block->size <= TINYBLOCK){
 		head = g_zone.tiny;
@@ -37,9 +37,22 @@ void	free(void* ptr){
 			pthread_mutex_unlock(&g_lock);
 			return ;
 		}
+		// If there is no next element or next id is not the same as "block" id
 		if (!parent->next || parent->next->blockId != block->blockId)
 			break ;
+		// Iterator
 		parent = parent->next;
+	}
+
+	// If only block in g_zone
+	if (head != g_zone.large && !parent->next && lastChild == head){
+		parent->size = (head == g_zone.tiny) ? TINYBLOCK : SMALLBLOCK;
+		parent->freeSize = parent->size;
+		parent->isFree = TRUE;
+		parent->next = NULL;
+		head = parent;
+		pthread_mutex_unlock(&g_lock);
+		return ;
 	}
 
 	// Remove block from g_zone
@@ -63,6 +76,6 @@ void	free(void* ptr){
 
 	// Free
 	if (munmap(parent, zoneSize) < 0)
-		fprintf(stderr, "munmap() error : errno=%i\n", errno);*/
+		fprintf(stderr, "munmap() error : errno=%i\n", errno);
 	pthread_mutex_unlock(&g_lock);
 }
